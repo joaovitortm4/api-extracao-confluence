@@ -1,5 +1,5 @@
 const express = require("express");
-const { extractAllData } = require("./confluenceScraper");
+const { extractProfissionais, extractAllData } = require("./confluenceScraper");
 
 const app = express();
 const PORT = 5000;
@@ -12,6 +12,16 @@ app.get("/confluence/all", async (req, res) => {
     res.status(500).json({ error: "Erro ao obter os dados do Confluence" });
   }
 });
+
+app.get("/confluence/profissionais", async (req, res) => {
+  try {
+    const data = await extractProfissionais();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao obter os dados do Confluence" });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

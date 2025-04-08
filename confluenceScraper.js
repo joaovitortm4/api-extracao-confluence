@@ -4,7 +4,6 @@ const axios = require("axios");
 const EMAIL = process.env.EMAIL;
 const API_TOKEN = process.env.API_TOKEN;
 const BASE_URL = process.env.BASE_URL;
-const ROOT_PAGE_ID = process.env.ROOT_PAGE_ID;
 
 const auth = {
   auth: {
@@ -52,7 +51,13 @@ async function getAllPagesRecursive(parentId) {
 }
 
 async function extractAllData() {
-  return await getAllPagesRecursive(ROOT_PAGE_ID);
+  const pageId = process.env.PACIENTES_ID;
+  return await getAllPagesRecursive(pageId);
 }
 
-module.exports = { extractAllData };
+async function extractProfissionais() {
+  const pageId = process.env.PROFISSIONAIS_ID;
+  return await getAllPagesRecursive(pageId);
+}
+
+module.exports = { extractAllData, extractProfissionais };
